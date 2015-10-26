@@ -32,16 +32,24 @@ public class Coordinate {
 	private double latitude;
 	private double longitude;
 	
+	private final double earth = 6371; //earth radius
+	
 	public Coordinate() {
 		this.latitude = 0;
 		this.longitude = 0;
 	}
 	
 	public Coordinate(double latitude, double longitude){
+		checkLatLon(latitude, longitude);
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
 	
+	private void checkLatLon(double latitude, double longitude) {
+		if(latitude < -180 || latitude > 180 || longitude < -90 || longitude > 90)
+			throw new IllegalArgumentException("Latitude must be between -180 and 180, Longitude between -90 and 90!");
+	}
+
 	public double getLatitude() {
 		return this.latitude;
 	}
@@ -50,16 +58,18 @@ public class Coordinate {
 		return this.longitude;
 	}
 	
-	public Coordinate getDistance(Coordinate cd) {
-		double lat = getLatitudinalDistance(cd);
-		double lon = getLongitudinalDistance(cd);
-		return new Coordinate(lat, lon);
+	public double getDistance(Coordinate cd) {
+		double lat = cd.getLatitude();
+		double lon = cd.getLongitude();
+		double lambda = Math.abs(lon-longitude);
+		double sigma = Math.acos(Math.sin(latitude)*Math.sin(lat) + Math.cos(latitude)*Math.cos(lat)*Math.cos(lambda));
+		return sigma*earth;
 	}
 	
 	public double getLatitudinalDistance(Coordinate cd) {
 		return cd.getLatitude() - this.latitude;
 	}
-	
+
 	public double getLongitudinalDistance(Coordinate cd) {
 		return cd.getLongitude() - this.longitude;
 	}

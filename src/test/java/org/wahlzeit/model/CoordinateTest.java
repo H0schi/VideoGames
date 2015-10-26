@@ -26,9 +26,9 @@ package org.wahlzeit.model;
 
 import org.junit.Test;
 
-import org.junit.Before;
+import static org.junit.Assert.*;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
 
 /**
  * All test cases of the class Coordinate.
@@ -44,14 +44,27 @@ public class CoordinateTest {
 	@Before
 	public void setUp() {
 		cdDefault = new Coordinate();
-		cd1 = new Coordinate(100.0, 100.0);
-		cd2 = new Coordinate(-50.0, 155.0);
+		cd1 = new Coordinate(100.0, 90.0);
+		cd2 = new Coordinate(-50.0, 70.0);
 	}
 	
 	@Test
 	public void testDefaultConstructor() {
 		assertEquals(0.0, cdDefault.getLatitude(), epsilon);
 		assertEquals(0.0, cdDefault.getLongitude(), epsilon);
+	}
+	
+	@SuppressWarnings("unused")
+	@Test
+	public void testConstructorWithIllegalArguments() {
+		try {
+			Coordinate wrong1 = new Coordinate(1000, 0);
+			fail("Should throw IllegalArgumentException because of latitude!");
+		} catch (IllegalArgumentException e) {}
+		try {
+			Coordinate wrong2 = new Coordinate(0, 100);
+			fail("Should throw IllegalArgumentException because of longitude!");
+		} catch (IllegalArgumentException e) {}
 	}
 	
 	@Test
@@ -68,7 +81,7 @@ public class CoordinateTest {
 	@Test
 	public void testGetLongitudeDistance() {
 		double res = cd1.getLongitudinalDistance(cd2);
-		assertEquals(55.0, res, epsilon); // 155 - 100
+		assertEquals(-20.0, res, epsilon); // 70 - 90
 	}
 	
 	@Test(expected = NullPointerException.class)
@@ -78,16 +91,14 @@ public class CoordinateTest {
 	
 	@Test
 	public void testGetDistanceSameCoordinate() {
-		Coordinate res = cd1.getDistance(cd1);
-		assertEquals(0.0, res.getLatitude(), epsilon);
-		assertEquals(0.0, res.getLongitude(), epsilon);
+		double res = cd1.getDistance(cd1);
+		assertEquals(0.0, res, epsilon);
 	}
 	
 	@Test
 	public void testGetDistance() {
-		Coordinate res = cd1.getDistance(cd2);
-		assertEquals(-150.0, res.getLatitude(), epsilon); // -50 - 100
-		assertEquals(55.0, res.getLongitude(), epsilon); // 155 - 100
+		double res = cd1.getDistance(cd2);
+		assertEquals(8681.02436, res, epsilon);
 	}
 	
 	@Test(expected = NullPointerException.class)

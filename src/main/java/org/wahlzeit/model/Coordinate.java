@@ -1,9 +1,9 @@
 /**
  * Coordinate
  * 
- * version 0.1
+ * version 0.2
  * 
- * date 21.10.2015
+ * date 30.10.2015
  * 
  * Copyright (c) by Thorsten Schwachhofer
  *
@@ -34,30 +34,48 @@ public class Coordinate {
 	
 	private final double earth = 6371; //earth radius
 	
+	/**
+	 * @methodtype constructor
+	 */
 	public Coordinate() {
 		this.latitude = 0;
 		this.longitude = 0;
 	}
 	
+	/**
+	 * @methodtype constructor
+	 */
 	public Coordinate(double latitude, double longitude){
 		checkLatLon(latitude, longitude);
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
 	
+	/**
+	 * @methodtype assertion
+	 */
 	private void checkLatLon(double latitude, double longitude) {
 		if(latitude < -180 || latitude > 180 || longitude < -90 || longitude > 90)
 			throw new IllegalArgumentException("Latitude must be between -180 and 180, Longitude between -90 and 90!");
 	}
 
+	/**
+	 * @methodtype get
+	 */
 	public double getLatitude() {
 		return this.latitude;
 	}
 	
+	/**
+	 * @methodtype get
+	 */
 	public double getLongitude() {
 		return this.longitude;
 	}
 	
+	/**
+	 * @methodtype get
+	 */
 	public double getDistance(Coordinate cd) {
 		double lat = cd.getLatitude();
 		double lon = cd.getLongitude();
@@ -66,10 +84,16 @@ public class Coordinate {
 		return sigma*earth;
 	}
 	
+	/**
+	 * @methodtype get
+	 */
 	public double getLatitudinalDistance(Coordinate cd) {
 		return cd.getLatitude() - this.latitude;
 	}
 
+	/**
+	 * @methodtype get
+	 */
 	public double getLongitudinalDistance(Coordinate cd) {
 		return cd.getLongitude() - this.longitude;
 	}

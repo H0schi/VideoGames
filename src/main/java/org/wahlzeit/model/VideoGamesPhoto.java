@@ -37,9 +37,9 @@ public class VideoGamesPhoto extends Photo {
 	/**
 	 * @methodtype constructor
 	 */
-//	public VideoGamesPhoto() {
-//		super(); //not necessary, see: http://stackoverflow.com/a/6318640
-//	}
+	public VideoGamesPhoto() {
+		super(); //TODO: necessary...? http://stackoverflow.com/a/6318640
+	}
 	
 	/**
 	 * @methodtype constructor

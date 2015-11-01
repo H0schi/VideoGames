@@ -1,5 +1,5 @@
 /**
- * Location
+ * VideoGamesPhotoManager
  * 
  * version 0.2
  * 
@@ -24,49 +24,29 @@
 
 package org.wahlzeit.model;
 
-import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
-/**
- * A Location has a name and a coordinate
- */
-public class Location implements Serializable{
+public class VideoGamesPhotoManager extends PhotoManager {
+	
+	protected static final VideoGamesPhotoManager instance = new VideoGamesPhotoManager();
+	
+//	public void savePhoto(VideoGamesPhoto photo) {
+//		updateObject(photo); //No need to overload this, as every instanceof VideoGamesPhoto is also a instanceof Photo
+//	}
+	
+	/**
+	 * @methodtype command
+	 */
+	public Set<VideoGamesPhoto> findPhotosByGenre(GameGenre genre) {
+		Set<VideoGamesPhoto> result = new HashSet<VideoGamesPhoto>();
+		readObjects(result, VideoGamesPhoto.class, VideoGamesPhoto.GENRE, genre);
 
-	private String name;
-	public Coordinate coordinate;
-	
-	/**
-	 * @methodtype constructor
-	 */
-	public Location() {
-		this.name = "";
-	}
-	
-	/**
-	 * @methodtype constructor
-	 */
-	public Location(String name) {
-		this.name = name;
-	}
-	
-	/**
-	 * @methodtype constructor
-	 */
-	public Location(String name, Coordinate coordinate) {
-		this.name = name;
-		this.coordinate = coordinate;
-	}
-	
-	/**
-	 * @methodtype get
-	 */
-	public String getName() {
-		return this.name;
-	}
-	
-	/**
-	 * @methodtype set
-	 */
-	public void setName(String name) {
-		this.name = name;
+		for (Iterator<VideoGamesPhoto> i = result.iterator(); i.hasNext(); ) {
+			doAddPhoto(i.next());
+		}
+
+		return result;
 	}
 }

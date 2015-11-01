@@ -1,9 +1,9 @@
 /**
  * Coordinate
  * 
- * version 0.2
+ * version 0.3
  * 
- * date 30.10.2015
+ * date 01.11.2015
  * 
  * Copyright (c) by Thorsten Schwachhofer
  *
@@ -24,10 +24,12 @@
 
 package org.wahlzeit.model;
 
+import java.io.Serializable;
+
 /**
  * A Coordinate is defined by latitude and longitude
  */
-public class Coordinate {
+public class Coordinate implements Serializable{
 	
 	private double latitude;
 	private double longitude;

@@ -1,9 +1,9 @@
 /**
  * VideoGamesPhoto
  * 
- * version 0.1
+ * version 0.2
  * 
- * date 30.10.2015
+ * date 01.11.2015
  * 
  * Copyright (c) by Thorsten Schwachhofer
  *
@@ -24,10 +24,14 @@
 
 package org.wahlzeit.model;
 
+import java.io.Serializable;
+
 /**
  * VideoGamesPhoto is a special domain inheriting the Photo class
  */
-public class VideoGamesPhoto extends Photo {
+public class VideoGamesPhoto extends Photo implements Serializable{
+
+	public static final String GENRE = "genre";
 
 	private int releaseYear;
 	

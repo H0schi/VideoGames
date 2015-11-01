@@ -58,6 +58,13 @@ public class VideoGamesPhotoFactory extends PhotoFactory {
 	}
 	
 	/**
+	 * @methodtype factory
+	 */
+	public VideoGamesPhoto createPhoto(int release, PhotoId id, GameGenre genre, GamePerspective perspective) {
+		return new VideoGamesPhoto(release, id, genre, perspective);
+	}
+	
+	/**
 	 * methodtype get
 	 */
 	public static synchronized VideoGamesPhotoFactory getInstance() {

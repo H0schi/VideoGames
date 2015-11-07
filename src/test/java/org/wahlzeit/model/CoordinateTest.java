@@ -1,9 +1,9 @@
 /**
  * CoordinateTest
  * 
- * version 0.2
+ * version 0.3
  * 
- * date 30.10.2015
+ * date 07.11.2015
  * 
  * Copyright (c) by Thorsten Schwachhofer
  *

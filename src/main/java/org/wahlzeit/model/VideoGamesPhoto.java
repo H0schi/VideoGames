@@ -26,9 +26,12 @@ package org.wahlzeit.model;
 
 import java.io.Serializable;
 
+import com.googlecode.objectify.annotation.Subclass;
+
 /**
  * VideoGamesPhoto is a special domain inheriting the Photo class
  */
+@Subclass
 public class VideoGamesPhoto extends Photo implements Serializable{
 
 	public static final String GENRE = "genre";

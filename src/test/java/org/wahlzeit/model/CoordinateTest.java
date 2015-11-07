@@ -44,7 +44,7 @@ public class CoordinateTest {
 	@Before
 	public void setUp() {
 		cdDefault = new Coordinate();
-		cd1 = new Coordinate(100.0, 90.0);
+		cd1 = new Coordinate(90.0, 90.0);
 		cd2 = new Coordinate(-50.0, 70.0);
 	}
 	
@@ -62,7 +62,7 @@ public class CoordinateTest {
 			fail("Should throw IllegalArgumentException because of latitude!");
 		} catch (IllegalArgumentException e) {}
 		try {
-			Coordinate wrong2 = new Coordinate(0, 100);
+			Coordinate wrong2 = new Coordinate(0, 1000);
 			fail("Should throw IllegalArgumentException because of longitude!");
 		} catch (IllegalArgumentException e) {}
 	}
@@ -70,7 +70,7 @@ public class CoordinateTest {
 	@Test
 	public void testGetLatitudeDistance() {
 		double res = cd1.getLatitudinalDistance(cd2);
-		assertEquals(-150.0, res, epsilon); // -50 - 100
+		assertEquals(-140.0, res, epsilon); // -50 - 90
 	}
 	
 	@Test(expected = NullPointerException.class)
@@ -98,7 +98,7 @@ public class CoordinateTest {
 	@Test
 	public void testGetDistance() {
 		double res = cd1.getDistance(cd2);
-		assertEquals(8681.02436, res, epsilon);
+		assertEquals(9637.06850, res, epsilon);
 	}
 	
 	@Test(expected = NullPointerException.class)

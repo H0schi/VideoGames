@@ -1,9 +1,9 @@
 /**
  * Coordinate
  * 
- * version 0.3
+ * version 0.4
  * 
- * date 01.11.2015
+ * date 07.11.2015
  * 
  * Copyright (c) by Thorsten Schwachhofer
  *
@@ -57,7 +57,7 @@ public class Coordinate implements Serializable{
 	 * @methodtype assertion
 	 */
 	private void checkLatLon(double latitude, double longitude) {
-		if(latitude < -180 || latitude > 180 || longitude < -90 || longitude > 90)
+		if(latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180)
 			throw new IllegalArgumentException("Latitude must be between -180 and 180, Longitude between -90 and 90!");
 	}
 

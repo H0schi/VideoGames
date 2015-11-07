@@ -1,7 +1,7 @@
 /**
  * Coordinate
  * 
- * version 0.4
+ * version 0.5
  * 
  * date 07.11.2015
  * 
@@ -24,80 +24,34 @@
 
 package org.wahlzeit.model;
 
-import java.io.Serializable;
-
 /**
- * A Coordinate is defined by latitude and longitude
+ * A Coordinate represents a place and is able to calculate distances
  */
-public class Coordinate implements Serializable{
-	
-	private double latitude;
-	private double longitude;
-	
-	private final double earth = 6371; //earth radius
-	
-	/**
-	 * @methodtype constructor
-	 */
-	public Coordinate() {
-		this.latitude = 0;
-		this.longitude = 0;
-	}
-	
-	/**
-	 * @methodtype constructor
-	 */
-	public Coordinate(double latitude, double longitude){
-		checkLatLon(latitude, longitude);
-		this.latitude = latitude;
-		this.longitude = longitude;
-	}
-	
-	/**
-	 * @methodtype assertion
-	 */
-	private void checkLatLon(double latitude, double longitude) {
-		if(latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180)
-			throw new IllegalArgumentException("Latitude must be between -180 and 180, Longitude between -90 and 90!");
-	}
-
-	/**
-	 * @methodtype get
-	 */
-	public double getLatitude() {
-		return this.latitude;
-	}
+public interface Coordinate {
 	
 	/**
 	 * @methodtype get
 	 */
-	public double getLongitude() {
-		return this.longitude;
-	}
+	public double getX();
 	
 	/**
 	 * @methodtype get
 	 */
-	public double getDistance(Coordinate cd) {
-		double lat = cd.getLatitude();
-		double lon = cd.getLongitude();
-		double lambda = Math.abs(lon-longitude);
-		double sigma = Math.acos(Math.sin(latitude)*Math.sin(lat) + Math.cos(latitude)*Math.cos(lat)*Math.cos(lambda));
-		return sigma*earth;
-	}
+	public double getY();
 	
 	/**
 	 * @methodtype get
 	 */
-	public double getLatitudinalDistance(Coordinate cd) {
-		return cd.getLatitude() - this.latitude;
-	}
-
+	public double getZ();
+	
 	/**
 	 * @methodtype get
 	 */
-	public double getLongitudinalDistance(Coordinate cd) {
-		return cd.getLongitude() - this.longitude;
-	}
+	public double getDistance(Coordinate cd);
+	
+	/**
+	 * @methodtype comparison
+	 */
+	public boolean isEqual(Coordinate cd);
 	
 }

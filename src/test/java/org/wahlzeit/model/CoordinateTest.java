@@ -37,73 +37,12 @@ public class CoordinateTest {
 	
 	private final double epsilon = 0.0001;
 	
-	private Coordinate cdDefault;
-	private Coordinate cd1;
-	private Coordinate cd2;
-	
-	@Before
-	public void setUp() {
-		cdDefault = new Coordinate();
-		cd1 = new Coordinate(90.0, 90.0);
-		cd2 = new Coordinate(-50.0, 70.0);
-	}
-	
 	@Test
-	public void testDefaultConstructor() {
-		assertEquals(0.0, cdDefault.getLatitude(), epsilon);
-		assertEquals(0.0, cdDefault.getLongitude(), epsilon);
-	}
-	
-	@SuppressWarnings("unused")
-	@Test
-	public void testConstructorWithIllegalArguments() {
-		try {
-			Coordinate wrong1 = new Coordinate(1000, 0);
-			fail("Should throw IllegalArgumentException because of latitude!");
-		} catch (IllegalArgumentException e) {}
-		try {
-			Coordinate wrong2 = new Coordinate(0, 1000);
-			fail("Should throw IllegalArgumentException because of longitude!");
-		} catch (IllegalArgumentException e) {}
-	}
-	
-	@Test
-	public void testGetLatitudeDistance() {
-		double res = cd1.getLatitudinalDistance(cd2);
-		assertEquals(-140.0, res, epsilon); // -50 - 90
-	}
-	
-	@Test(expected = NullPointerException.class)
-	public void testGetLatitudeWithNullPointer() {
-		cd1.getLatitudinalDistance(null);
-	}
-	
-	@Test
-	public void testGetLongitudeDistance() {
-		double res = cd1.getLongitudinalDistance(cd2);
-		assertEquals(-20.0, res, epsilon); // 70 - 90
-	}
-	
-	@Test(expected = NullPointerException.class)
-	public void testGetLongitudeWithNullPointer() {
-		cd1.getLongitudinalDistance(null);
-	}
-	
-	@Test
-	public void testGetDistanceSameCoordinate() {
-		double res = cd1.getDistance(cd1);
-		assertEquals(0.0, res, epsilon);
-	}
-	
-	@Test
-	public void testGetDistance() {
-		double res = cd1.getDistance(cd2);
-		assertEquals(9637.06850, res, epsilon);
-	}
-	
-	@Test(expected = NullPointerException.class)
-	public void testGetDistanceWithNullPointer() {
-		cd1.getDistance(null);
+	public void testWithDifferentCoordinates() {
+		SphericCoordinate cd1 = new SphericCoordinate(90, 90);
+		CartesianCoordinate cd2 = new CartesianCoordinate(50, 40, 100);
+		
+		assertEquals(cd1.getDistance(cd2), cd2.getDistance(cd1), epsilon);
 	}
 	
 }

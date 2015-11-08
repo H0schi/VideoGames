@@ -26,12 +26,15 @@ package org.wahlzeit.model;
 
 import java.io.Serializable;
 
+import com.googlecode.objectify.annotation.Container;
+
 /**
  * A Location has a name and a coordinate
  */
 public class Location implements Serializable{
 
 	private String name;
+	@Container
 	public Coordinate coordinate;
 	
 	/**

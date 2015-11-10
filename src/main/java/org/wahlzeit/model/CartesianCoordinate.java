@@ -14,7 +14,7 @@ package org.wahlzeit.model;
 /**
  * Cartesian representation of a Coordinate
  */
-public class CartesianCoordinate extends AbstractCoordinate{
+public class CartesianCoordinate extends AbstractCoordinate {
 	
 	private double x;
 	private double y;

@@ -12,9 +12,9 @@
 package org.wahlzeit.model;
 
 /**
- * Abstract version of a Coordinate to hide implementation from the client
+ * Abstract version of a Coordinate to hide implementation from the client. Standard representation of a Coordinate is a CartesianCoordinate
  */
-public abstract class AbstractCoordinate implements Coordinate{
+public abstract class AbstractCoordinate implements Coordinate {
 	
 	/**
 	 * @methodtype get

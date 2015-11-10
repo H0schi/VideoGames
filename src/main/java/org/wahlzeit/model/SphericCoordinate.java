@@ -14,7 +14,7 @@ package org.wahlzeit.model;
 /**
  * Spherical representation of a Coordinate
  */
-public class SphericCoordinate extends AbstractCoordinate{
+public class SphericCoordinate extends AbstractCoordinate {
 
 	private double latitude;
 	private double longitude;
@@ -32,7 +32,7 @@ public class SphericCoordinate extends AbstractCoordinate{
 	/**
 	 * @methodtype constructor
 	 */
-	public SphericCoordinate(double latitude, double longitude){
+	public SphericCoordinate(double latitude, double longitude) {
 		checkLatLon(latitude, longitude);
 		this.latitude = latitude;
 		this.longitude = longitude;

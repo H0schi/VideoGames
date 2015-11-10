@@ -1,30 +1,20 @@
 /**
  * CartesianCoordinate
  * 
- * version 0.1
+ * version 0.2
  * 
- * date 07.11.2015
+ * date 10.11.2015
  * 
- * Copyright (c) by Thorsten Schwachhofer
+ * Thorsten Schwachhofer
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public
- * License along with this program. If not, see
- * <http://www.gnu.org/licenses/>.
  */
 
 package org.wahlzeit.model;
 
-public class CartesianCoordinate implements Coordinate{
+/**
+ * Cartesian representation of a Coordinate
+ */
+public class CartesianCoordinate extends AbstractCoordinate{
 	
 	private double x;
 	private double y;
@@ -70,34 +60,12 @@ public class CartesianCoordinate implements Coordinate{
 	}
 
 	/**
-	 * @methodtype get
-	 */
-	@Override
-	public double getDistance(Coordinate cd) {
-		if(cd == null)
-			throw new IllegalArgumentException("Error: parameter of method getDistance is zero!");
-		
-		// Pythagoras' theorem
-		double x = this.getX();
-		double y = this.getY();
-		double z = this.getZ();
-		double otherX = cd.getX();
-		double otherY = cd.getY();
-		double otherZ = cd.getZ();
-		return Math.sqrt(Math.pow(otherX - x, 2) + Math.pow(otherY - y, 2) + Math.pow(otherZ - z, 2));
-	}
-
-	/**
 	 * @methodtype comparison
 	 */
 	@Override
 	public boolean isEqual(Coordinate cd) {
-		if (this == cd)
-			return true;
-		if (cd == null)
+		if(!super.isEqual(cd))
 			return false;
-		if(this.getDistance(cd) == 0.f)
-			return true;
 		if (!(cd instanceof CartesianCoordinate))
 			return false;
 		CartesianCoordinate other = (CartesianCoordinate) cd;

@@ -32,24 +32,13 @@ public abstract class AbstractCoordinate implements Coordinate {
 	public abstract double getZ();
 	
 	/**
-	 * @methodtype conversion
-	 */
-	public CartesianCoordinate asCartesianCoordinate() {
-		double x = this.getX();
-		double y = this.getY();
-		double z = this.getZ();
-		
-		return new CartesianCoordinate(x, y, z);
-	}
-	
-	/**
 	 * @methodtype get
 	 */
 	public double getDistance(Coordinate cd) {
 		if(cd == null)
 			throw new IllegalArgumentException("Error: parameter of method getDistance is zero!");
 		
-		CartesianCoordinate cCd = ((AbstractCoordinate) cd).asCartesianCoordinate();
+		AbstractCoordinate cCd = (AbstractCoordinate) cd;
 		
 		// Pythagoras' theorem
 		double x = this.getX();

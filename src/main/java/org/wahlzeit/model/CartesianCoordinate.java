@@ -1,9 +1,9 @@
 /**
  * CartesianCoordinate
  * 
- * version 0.2
+ * version 0.3
  * 
- * date 10.11.2015
+ * date 17.11.2015
  * 
  * Thorsten Schwachhofer
  *
@@ -64,18 +64,32 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public boolean isEqual(Coordinate cd) {
-		if(!super.isEqual(cd))
-			return false;
+		// Preconditons: see superclass
+		Coordinate copy = cd;
+		
+		boolean isEqual = true;
+		if (!super.isEqual(cd))
+			isEqual = false;
 		if (!(cd instanceof CartesianCoordinate))
-			return false;
+			isEqual = false;
+		if (isEqual == false) {
+			// Postcondition
+			assert hasSameFields(cd, copy);
+			return isEqual;
+		}
+			
 		CartesianCoordinate other = (CartesianCoordinate) cd;
 		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
-			return false;
+			isEqual = false;
 		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
-			return false;
+			isEqual = false;
 		if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z))
-			return false;
-		return true;
+			isEqual = false;
+		
+		// Postcondition
+		assert hasSameFields(cd, copy);
+		
+		return isEqual;
 	}
 
 }

@@ -1,9 +1,9 @@
 /**
  * SphericCoordinate
  * 
- * version 0.2
+ * version 0.3
  * 
- * date 10.11.2015
+ * date 17.11.2015
  * 
  * Thorsten Schwachhofer
  * 
@@ -108,18 +108,32 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public boolean isEqual(Coordinate cd) {
+		// Preconditons: see superclass
+		Coordinate copy = cd;
+		
+		boolean isEqual = true;
 		if(!super.isEqual(cd))
-			return false;
-		if (!(cd instanceof SphericCoordinate))
-			return false;
+			isEqual = false;
+		if(!(cd instanceof SphericCoordinate))
+			isEqual = false;
+		if(isEqual == false) {
+			// Postcondition
+			assert hasSameFields(cd, copy);
+			return isEqual;
+		}
+		
 		SphericCoordinate other = (SphericCoordinate) cd;
-		if (Double.doubleToLongBits(latitude) != Double.doubleToLongBits(other.latitude))
-			return false;
-		if (Double.doubleToLongBits(longitude) != Double.doubleToLongBits(other.longitude))
-			return false;
-		if (Double.doubleToLongBits(radius) != Double.doubleToLongBits(other.radius))
-			return false;
-		return true;
+		if(Double.doubleToLongBits(latitude) != Double.doubleToLongBits(other.latitude))
+			isEqual = false;
+		if(Double.doubleToLongBits(longitude) != Double.doubleToLongBits(other.longitude))
+			isEqual = false;
+		if(Double.doubleToLongBits(radius) != Double.doubleToLongBits(other.radius))
+			isEqual = false;
+		
+		// Postcondition
+		assert hasSameFields(cd, copy);
+		
+		return isEqual;
 	}
 
 	

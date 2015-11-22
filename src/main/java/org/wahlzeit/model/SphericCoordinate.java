@@ -124,7 +124,6 @@ public class SphericCoordinate extends AbstractCoordinate {
 	@Override
 	public boolean isEqual(Coordinate cd) {
 		// Preconditons: see superclass
-		Coordinate copy = cd;
 		
 		boolean isEqual = true;
 		if(!super.isEqual(cd))
@@ -132,8 +131,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 		if(!(cd instanceof SphericCoordinate))
 			isEqual = false;
 		if(isEqual == false) {
-			// Postcondition
-			assert hasSameFields(cd, copy);
+			// Postcondition: none
 			return isEqual;
 		}
 		
@@ -145,8 +143,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 		if(Double.doubleToLongBits(radius) != Double.doubleToLongBits(other.radius))
 			isEqual = false;
 		
-		// Postcondition
-		assert hasSameFields(cd, copy);
+		// Postconditions: none
 		
 		return isEqual;
 	}

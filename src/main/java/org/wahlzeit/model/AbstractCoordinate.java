@@ -40,10 +40,8 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 */
 	public double getDistance(Coordinate cd) {
 		// Preconditions
-		Coordinate copy = cd;
 		if(!isCoordinateValid(cd))
 			throw new IllegalArgumentException("Error: Parameter is not a valid Coordinate object!");
-		
 		
 		AbstractCoordinate absCd = (AbstractCoordinate) cd;
 		
@@ -58,11 +56,8 @@ public abstract class AbstractCoordinate implements Coordinate {
 		
 		assert isCoordinateValid(this); // Invariant
 		
-		
-		// Postconditions
-		assert isCoordinateValid(cd);
+		// Postcondition
 		assert isValidDoubleValue(result);
-		assert hasSameFields(cd, copy);
 		
 		return result;
 	}
@@ -74,7 +69,6 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 */
 	public boolean isEqual(Coordinate cd) {
 		// Preconditions
-		Coordinate copy = cd;
 		if(!isCoordinateValid(cd))
 			throw new IllegalArgumentException("Error: Parameter is not a valid Coordinate object!");
 				
@@ -84,14 +78,9 @@ public abstract class AbstractCoordinate implements Coordinate {
 		if(this.getDistance(cd) == (0.f - EPSILON))
 			isEqual = true;
 		if(hasSameFields(this, cd))
-			isEqual = true;
+			isEqual = true;		
 		
-		assert isCoordinateValid(this); // Invariant
-		
-		
-		// Postconditions
-		assert isCoordinateValid(cd);
-		assert hasSameFields(cd, copy);
+		// Postconditions: none
 		
 		return isEqual;
 	}
@@ -124,6 +113,8 @@ public abstract class AbstractCoordinate implements Coordinate {
 	
 	/**
 	 * @methodtype query
+	 * Intended to check if a Coordinate Objekt is changed during a method
+	 * Unnecessary, as Java passes parameters by value, see http://stackoverflow.com/a/40523
 	 */
 	protected boolean hasSameFields(Coordinate cd1, Coordinate cd2) {
 		AbstractCoordinate absCd1 = (AbstractCoordinate) cd1;

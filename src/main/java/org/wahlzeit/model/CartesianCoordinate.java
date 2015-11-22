@@ -70,7 +70,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	@Override
 	public boolean isEqual(Coordinate cd) {
 		// Preconditons: see superclass
-		Coordinate copy = cd;
 		
 		boolean isEqual = true;
 		if (!super.isEqual(cd))
@@ -78,8 +77,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		if (!(cd instanceof CartesianCoordinate))
 			isEqual = false;
 		if (isEqual == false) {
-			// Postcondition
-			assert hasSameFields(cd, copy);
+			// Postcondition: none
 			return isEqual;
 		}
 			
@@ -91,8 +89,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z))
 			isEqual = false;
 		
-		// Postcondition
-		assert hasSameFields(cd, copy);
+		// Postconditions: none
 		
 		return isEqual;
 	}

@@ -1,9 +1,9 @@
 /**
  * CartesianCoordinate
  * 
- * version 0.3
+ * version 0.4
  * 
- * date 17.11.2015
+ * date 22.11.2015
  * 
  * Thorsten Schwachhofer
  *
@@ -31,8 +31,13 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	
 	/**
 	 * @methodtype constructor
+	 * Precondition: parameters are valid double values
 	 */
 	public CartesianCoordinate(double x, double y, double z) {
+		// Precondition
+		if(!isValidDoubleValue(x) || !isValidDoubleValue(y) || !isValidDoubleValue(z))
+			throw new IllegalArgumentException("Error: Parameter is not a valid double value");
+		
 		this.x = x;
 		this.y = y;
 		this.z = z;

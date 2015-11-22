@@ -1,9 +1,9 @@
 /**
  * SphericCoordinate
  * 
- * version 0.3
+ * version 0.4
  * 
- * date 17.11.2015
+ * date 22.11.2015
  * 
  * Thorsten Schwachhofer
  * 
@@ -31,9 +31,16 @@ public class SphericCoordinate extends AbstractCoordinate {
 	
 	/**
 	 * @methodtype constructor
+	 * Precondition: parameters are valid double values, latitude and longitude are valid
 	 */
 	public SphericCoordinate(double latitude, double longitude) {
-		checkLatLon(latitude, longitude);
+		// Preconditions
+		if(!isValidDoubleValue(latitude) || !isValidDoubleValue(longitude))
+			throw new IllegalArgumentException("Error: Parameter is not a valid double value");
+		if(!isLatLonValid(latitude, longitude))
+			throw new IllegalArgumentException("Error: Latitude must be between -90 and 90, Longitude between -180 and 180!");
+		
+		
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.radius = 6371.f; //earth radius
@@ -41,20 +48,28 @@ public class SphericCoordinate extends AbstractCoordinate {
 	
 	/**
 	 * @methodtype constructor
+	 * Precondition: parameters are valid double values, latitude and longitude are valid
 	 */
 	public SphericCoordinate(double latitude, double longitude, double radius) {
-		checkLatLon(latitude, longitude);
+		// Preconditions
+		if(!isValidDoubleValue(latitude) || !isValidDoubleValue(longitude) || !isValidDoubleValue(radius))
+			throw new IllegalArgumentException("Error: Parameter is not a valid double value");
+		if(!isLatLonValid(latitude, longitude))
+			throw new IllegalArgumentException("Error: Latitude must be between -90 and 90, Longitude between -180 and 180!");
+		
+		
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.radius = radius;
 	}
 	
 	/**
-	 * @methodtype assertion
+	 * @methodtype query
 	 */
-	private void checkLatLon(double latitude, double longitude) {
+	private boolean isLatLonValid(double latitude, double longitude) {
 		if(latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180)
-			throw new IllegalArgumentException("Latitude must be between -90 and 90, Longitude between -180 and 180!");
+			return false;
+		return true;
 	}
 
 	/**

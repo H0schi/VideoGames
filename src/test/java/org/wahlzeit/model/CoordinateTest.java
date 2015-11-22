@@ -159,15 +159,17 @@ public class CoordinateTest {
 		assertEquals(coordinate1.getDistance(coorindate2), coorindate2.getDistance(coordinate1), epsilon);
 	}
 	
-	@Test
-	public void isCoordinateValidTest() {
+	@Test(expected = IllegalArgumentException.class)
+	public void sphericConstructorTest() {
+		@SuppressWarnings("unused")
 		SphericCoordinate coordinate = new SphericCoordinate(90, 90, Double.NaN);
-		assertEquals(false, coordinate.isCoordinateValid(null));
-		assertEquals(false, coordinate.isCoordinateValid(coordinate));
-		
+	}
+	
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void cartesianConstructorTest() {
+		@SuppressWarnings("unused")
 		CartesianCoordinate coordinate2 = new CartesianCoordinate(Double.NaN, Double.NaN, Double.NaN);
-		assertEquals(false, coordinate2.isCoordinateValid(null));
-		assertEquals(false, coordinate2.isCoordinateValid(coordinate2));
 	}
 	
 	@Test

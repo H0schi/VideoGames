@@ -1,9 +1,9 @@
 /**
  * SphericCoordinate
  * 
- * version 0.4
+ * version 0.5
  * 
- * date 22.11.2015
+ * date 24.11.2015
  * 
  * Thorsten Schwachhofer
  * 
@@ -24,31 +24,20 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @methodtype constructor
 	 */
 	public SphericCoordinate() {
-		this.latitude = 0;
-		this.longitude = 0;
-		this.radius = 6371.f;
+		this(0.f, 0.f, 6371.f);
 	}
 	
 	/**
 	 * @methodtype constructor
-	 * Precondition: parameters are valid double values, latitude and longitude are valid
 	 */
 	public SphericCoordinate(double latitude, double longitude) {
-		// Preconditions
-		if(!isValidDoubleValue(latitude) || !isValidDoubleValue(longitude))
-			throw new IllegalArgumentException("Error: Parameter is not a valid double value");
-		if(!isLatLonValid(latitude, longitude))
-			throw new IllegalArgumentException("Error: Latitude must be between -90 and 90, Longitude between -180 and 180!");
-		
-		
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.radius = 6371.f; //earth radius
+		this(latitude, longitude, 6371.f);
 	}
 	
 	/**
 	 * @methodtype constructor
-	 * Precondition: parameters are valid double values, latitude and longitude are valid
+	 * Precondition: parameters are valid double values, latitude, longitude and radius are valid, radius > 0
+	 * Postcondition: assertClassInvariants
 	 */
 	public SphericCoordinate(double latitude, double longitude, double radius) {
 		// Preconditions
@@ -56,11 +45,16 @@ public class SphericCoordinate extends AbstractCoordinate {
 			throw new IllegalArgumentException("Error: Parameter is not a valid double value");
 		if(!isLatLonValid(latitude, longitude))
 			throw new IllegalArgumentException("Error: Latitude must be between -90 and 90, Longitude between -180 and 180!");
+		if(radius < 0)
+			throw new IllegalArgumentException("Error: Radius must not be negative!");
 		
 		
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.radius = radius;
+		
+		// Postcondition
+		assertClassInvariants();
 	}
 	
 	/**
@@ -99,7 +93,13 @@ public class SphericCoordinate extends AbstractCoordinate {
 	@Override
 	public double getX() {
 		// for conversion spherical -> cartesian see http://mathinsight.org/spherical_coordinates
-		return this.radius * Math.sin(this.longitude) * Math.cos(this.latitude);
+		double result = this.radius * Math.sin(this.longitude) * Math.cos(this.latitude);
+		
+		// Postcondition
+		assert isValidDoubleValue(result);
+		assertClassInvariants();
+		
+		return result;
 	}
 
 	/**
@@ -107,7 +107,13 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public double getY() {
-		return this.radius * Math.sin(this.longitude) * Math.sin(this.latitude);
+		double result = this.radius * Math.sin(this.longitude) * Math.sin(this.latitude);
+		
+		// Postcondition
+		assert isValidDoubleValue(result);
+		assertClassInvariants();
+		
+		return result;
 	}
 
 	/**
@@ -115,7 +121,13 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public double getZ() {
-		return this.radius * Math.cos(this.longitude);
+		double result = this.radius * Math.cos(this.longitude);
+		
+		// Postcondition
+		assert isValidDoubleValue(result);
+		assertClassInvariants();
+		
+		return result;
 	}
 
 	/**
@@ -131,7 +143,10 @@ public class SphericCoordinate extends AbstractCoordinate {
 		if(!(cd instanceof SphericCoordinate))
 			isEqual = false;
 		if(isEqual == false) {
-			// Postcondition: none
+			// Postconditions
+			assert isAbsCoordinateValid(cd);
+			assertClassInvariants();
+			
 			return isEqual;
 		}
 		
@@ -143,11 +158,22 @@ public class SphericCoordinate extends AbstractCoordinate {
 		if(Double.doubleToLongBits(radius) != Double.doubleToLongBits(other.radius))
 			isEqual = false;
 		
-		// Postconditions: none
+		// Postconditions
+		assert isAbsCoordinateValid(cd);
+		assertClassInvariants();
 		
 		return isEqual;
 	}
 
-	
+	/**
+	 * @methodtype assertion
+	 */
+	protected void assertClassInvariants() {
+		assert isValidDoubleValue(latitude);
+		assert isValidDoubleValue(longitude);
+		assert isValidDoubleValue(radius);
+		assert isLatLonValid(latitude, longitude);
+		assert radius > 0;
+	}
 
 }

@@ -1,9 +1,9 @@
 /**
  * CoordinateTest
  * 
- * version 0.3
+ * version 0.4
  * 
- * date 07.11.2015
+ * date 24.11.2015
  * 
  * Thorsten Schwachhofer
  * 
@@ -170,15 +170,6 @@ public class CoordinateTest {
 	public void cartesianConstructorTest() {
 		@SuppressWarnings("unused")
 		CartesianCoordinate coordinate2 = new CartesianCoordinate(Double.NaN, Double.NaN, Double.NaN);
-	}
-	
-	@Test
-	public void hasSameFieldsTest() {
-		assertTrue(sCd1.hasSameFields(sCd1, sCd1));
-		assertTrue(sCd1.hasSameFields(sCd1, sCd3));
-		
-		assertTrue(cCd1.hasSameFields(cCd1, cCd1));
-		assertTrue(cCd1.hasSameFields(cCd1, cCd1));
 	}
 	
 }

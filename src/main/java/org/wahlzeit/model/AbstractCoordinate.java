@@ -1,9 +1,9 @@
 /**
  * AbstractCoordinate
  * 
- * version 0.2
+ * version 0.3
  * 
- * date 17.11.2015
+ * date 24.11.2015
  * 
  * Thorsten Schwachhofer
  *
@@ -36,12 +36,14 @@ public abstract class AbstractCoordinate implements Coordinate {
 	/**
 	 * @methodtype get
 	 * Precondition: cd is valid Coordinate: cd != null && cd.get...() is valid double value
-	 * Postcondition: cd stays unchanged && cd stays valid && result is valid double value
+	 * Postcondition: cd stays valid && result is valid double value && result >= 0
 	 */
 	public double getDistance(Coordinate cd) {
 		// Preconditions
-		if(!isCoordinateValid(cd))
-			throw new IllegalArgumentException("Error: Parameter is not a valid Coordinate object!");
+		if(cd == null)
+			throw new IllegalArgumentException("Error: Parameter must not be null!");
+		if(!isAbsCoordinateValid(cd))
+			throw new IllegalArgumentException("Error: Coordinate is not valid!");
 		
 		AbstractCoordinate absCd = (AbstractCoordinate) cd;
 		
@@ -54,10 +56,11 @@ public abstract class AbstractCoordinate implements Coordinate {
 		double otherZ = absCd.getZ();
 		double result = Math.sqrt((otherX - x)*(otherX - x) + (otherY - y)*(otherY - y) + (otherZ - z)*(otherZ - z));
 		
-		assert isCoordinateValid(this); // Invariant
-		
-		// Postcondition
+		// Postconditions
 		assert isValidDoubleValue(result);
+		assert result >= 0: "Result of getDistance is negative!";
+		assert isAbsCoordinateValid(cd);
+		assertClassInvariants();
 		
 		return result;
 	}
@@ -65,41 +68,26 @@ public abstract class AbstractCoordinate implements Coordinate {
 	/**
 	 * @methodtype comparison
 	 * Precondition: cd is valid Coordinate: cd != null && cd.get...() is valid double value
-	 * Postcondition: cd stays unchanged && cd stays valid
+	 * Postcondition: cd stays valid
 	 */
 	public boolean isEqual(Coordinate cd) {
 		// Preconditions
-		if(!isCoordinateValid(cd))
-			throw new IllegalArgumentException("Error: Parameter is not a valid Coordinate object!");
+		if(cd == null)
+			throw new IllegalArgumentException("Error: Parameter must not be null!");
+		if(!isAbsCoordinateValid(cd))
+			throw new IllegalArgumentException("Error: Coordinate is not valid!");
 				
 		boolean isEqual = false;
 		if(this == cd)
 			isEqual = true;
-		if(this.getDistance(cd) == (0.f - EPSILON))
-			isEqual = true;
-		if(hasSameFields(this, cd))
-			isEqual = true;		
+		if(this.getDistance(cd) <= EPSILON)
+			isEqual = true;	
 		
-		// Postconditions: none
+		// Postconditions
+		assert isAbsCoordinateValid(cd);
+		assertClassInvariants();
 		
 		return isEqual;
-	}
-	
-	/**
-	 * @methodtype query
-	 */
-	protected boolean isCoordinateValid(Coordinate cd) {
-		if(cd == null)
-			return false;
-		
-		AbstractCoordinate absCd = (AbstractCoordinate) cd;
-		boolean validX = isValidDoubleValue(absCd.getX());
-		boolean validY = isValidDoubleValue(absCd.getY());
-		boolean validZ = isValidDoubleValue(absCd.getZ());
-		
-		if(validX && validY && validZ)
-			return true;
-		return false;
 	}
 	
 	/**
@@ -113,15 +101,21 @@ public abstract class AbstractCoordinate implements Coordinate {
 	
 	/**
 	 * @methodtype query
-	 * Intended to check if a Coordinate Objekt is changed during a method
-	 * Unnecessary, as Java passes parameters by value, see http://stackoverflow.com/a/40523
 	 */
-	protected boolean hasSameFields(Coordinate cd1, Coordinate cd2) {
-		AbstractCoordinate absCd1 = (AbstractCoordinate) cd1;
-		AbstractCoordinate absCd2 = (AbstractCoordinate) cd2;
-		if(absCd1.getX() == absCd2.getX() && absCd1.getY() == absCd2.getY() && absCd1.getZ() == absCd2.getZ())
+	protected boolean isAbsCoordinateValid(Coordinate cd) {
+		AbstractCoordinate absCd = (AbstractCoordinate) cd;
+		boolean validX = isValidDoubleValue(absCd.getX());
+		boolean validY = isValidDoubleValue(absCd.getY());
+		boolean validZ = isValidDoubleValue(absCd.getZ());
+		
+		if(validX && validY && validZ)
 			return true;
 		return false;
 	}
+	
+	/**
+	 * @methodtype assertion
+	 */
+	protected abstract void assertClassInvariants();
 
 }

@@ -1,9 +1,9 @@
 /**
  * Coordinate
  * 
- * version 0.6
+ * version 0.7
  * 
- * date 10.11.2015
+ * date 24.11.2015
  * 
  * Thorsten Schwachhofer
  * 
@@ -18,15 +18,15 @@ public interface Coordinate {
 	
 	/**
 	 * @methodtype get
-	 * Precondition: cd is valid Coordinate: cd != null && cd has fields with valid values
-	 * Postcondition: cd stays unchanged && cd stays valid && result is valid double value
+	 * Precondition: cd is valid Coordinate: cd != null && cd.get...() is valid double value
+	 * Postcondition: cd stays valid && result is valid double value && result >= 0
 	 */
 	public double getDistance(Coordinate cd);
 	
 	/**
 	 * @methodtype comparison
-	 * Precondition: cd is valid Coordinate: cd != null && cd has fields with valid values
-	 * Postcondition: cd stays unchanged && cd stays valid
+	 * Precondition: cd is valid Coordinate: cd != null && cd.get...() is valid double value
+	 * Postcondition: cd stays valid
 	 */
 	public boolean isEqual(Coordinate cd);
 	

@@ -1,9 +1,9 @@
 /**
  * CartesianCoordinate
  * 
- * version 0.4
+ * version 0.5
  * 
- * date 22.11.2015
+ * date 24.11.2015
  * 
  * Thorsten Schwachhofer
  *
@@ -24,9 +24,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * @methodtype constructor
 	 */
 	public CartesianCoordinate() {
-		this.x = 0.f;
-		this.y = 0.f;
-		this.z = 0.f;
+		this(0.f, 0.f, 0.f);
 	}
 	
 	/**
@@ -41,6 +39,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		
+		// Postcondition
+		assertClassInvariants();
 	}
 	
 	/**
@@ -77,7 +78,10 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		if (!(cd instanceof CartesianCoordinate))
 			isEqual = false;
 		if (isEqual == false) {
-			// Postcondition: none
+			// Postconditions
+			assert isAbsCoordinateValid(cd);
+			assertClassInvariants();
+			
 			return isEqual;
 		}
 			
@@ -89,9 +93,20 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z))
 			isEqual = false;
 		
-		// Postconditions: none
+		// Postconditions
+		assert isAbsCoordinateValid(cd);
+		assertClassInvariants();
 		
 		return isEqual;
+	}
+	
+	/**
+	 * @methodtype assertion
+	 */
+	protected void assertClassInvariants() {
+		assert isValidDoubleValue(x);
+		assert isValidDoubleValue(y);
+		assert isValidDoubleValue(z);
 	}
 
 }

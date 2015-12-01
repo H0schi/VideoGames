@@ -39,6 +39,10 @@ import java.util.Map;
  */
 @Entity
 public class Photo extends DataObject {
+	@interface DesignPattern {
+		String name = "ModelViewController";
+		String[] participants = {"Model"};
+	}
 
 	/**
 	 *

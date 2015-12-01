@@ -40,7 +40,10 @@ import java.util.logging.Logger;
  * @review
  */
 public class DatastoreAdapter extends ImageStorage {
-
+	@interface DesignPattern {
+		String name = "Adapter";
+		String[] participants = {"Service"};
+	}
 	private static final Logger log = Logger.getLogger(DatastoreAdapter.class.getName());
 
 
@@ -116,6 +119,10 @@ public class DatastoreAdapter extends ImageStorage {
 	 */
 	@Entity
 	public static class ImageWrapper {
+		@interface DesignPattern {
+			String name = "Adapter";
+			String[] participants = {"Adapter"};
+		}
 
 		// see https://cloud.google.com/datastore/docs/tools/administration
 		public final int maxEntitySize = 1024 * 1024; // = 1 MB

@@ -21,6 +21,10 @@ import org.wahlzeit.model.persistence.DatastoreAdapter.ImageWrapper;
  * @review
  */
 public class OfyService {
+	@interface DesignPattern {
+		String name = "Adapter";
+		String[] participants = {"Target"};
+	}
 
 	/**
 	 * Register all entities at startup

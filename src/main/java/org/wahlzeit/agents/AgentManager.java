@@ -30,6 +30,12 @@ import java.util.logging.Logger;
  * The AgentManager singleton manages all Agent instances.
  */
 public class AgentManager {
+	@interface DesignPattern {
+		String name = "Manager";
+		String[] participants = {
+				"Manager",
+				"Singleton"};
+	}
 
 	private static Logger log = Logger.getLogger(AgentManager.class.getName());
 

@@ -43,7 +43,11 @@ import java.util.logging.Logger;
  * A handler class for a specific web form.
  */
 public class FlagPhotoFormHandler extends AbstractWebFormHandler {
-
+	@interface DesignPattern {
+		String name = "ModelViewController";
+		String[] participants = {"Controller"};
+	}
+	
 	private static final Logger log = Logger.getLogger(FlagPhotoFormHandler.class.getName());
 
 
@@ -71,7 +75,7 @@ public class FlagPhotoFormHandler extends AbstractWebFormHandler {
 		String id = us.getAsString(args, Photo.ID);
 		Photo photo = PhotoManager.getInstance().getPhoto(id);
 		part.addString(Photo.ID, id);
-		part.addString(Photo.THUMB, getPhotoThumb(us, photo));
+		part.addString(Photo.THUMB, getPhotoThumb(us, photo)); // Make thumbnail from a Photo 
 		part.maskAndAddStringFromArgsWithDefault(args, PhotoCase.FLAGGER, us.getClient().getEmailAddress().asString());
 		part.addSelect(PhotoCase.REASON, FlagReason.MISMATCH);
 		part.maskAndAddStringFromArgs(args, PhotoCase.EXPLANATION);

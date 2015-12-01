@@ -28,6 +28,12 @@ import java.util.logging.Logger;
  * An Agent executes background tasks.
  */
 public abstract class Agent {
+	@interface DesignPattern {
+		String name = "Manager";
+		String[] participants = {				
+				"Subject",
+				"ConcreteSubject"};
+	}
 
 	private static Logger log = Logger.getLogger(Agent.class.getName());
 

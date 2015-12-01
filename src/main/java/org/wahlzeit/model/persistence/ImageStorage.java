@@ -14,7 +14,10 @@ import java.util.logging.Logger;
  * @review
  */
 public abstract class ImageStorage {
-
+	@interface DesignPattern {
+		String name = "Adapter";
+		String[] participants = {"Service"};
+	}
 	private static final Logger log = Logger.getLogger(ImageStorage.class.getName());
 	private static ImageStorage instance = null;
 

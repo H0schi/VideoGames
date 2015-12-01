@@ -23,6 +23,10 @@ import java.util.logging.Logger;
  * An agent class to notify users about new praise received for their photos.
  */
 public class NotifyUsersAboutPraiseAgent extends Agent {
+	@interface DesignPattern {
+		String name = "Manager";
+		String[] participants = {"ConcreteSubject"};
+	}
 
 	public static final String NAME = "notifyUsersAboutPraise";
 

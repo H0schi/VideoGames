@@ -28,6 +28,12 @@ import java.util.List;
  * It gets initialized once and is read-only after that.
  */
 public class WebPartTemplate {
+	@interface DesignPattern {
+		String name = "ModelViewController";
+		String[] participants = {
+				"Controller",
+				"View"};
+	}
 
 	/**
 	 *
@@ -62,6 +68,7 @@ public class WebPartTemplate {
 		StringBuffer buffer = new StringBuffer(source);
 
 		for (int index = 0; index != -1; ) {
+			// Search for templates in .html files
 			int nextSlot = buffer.indexOf("{$", index);
 			if (nextSlot != -1) {
 				int endSlot = buffer.indexOf("}", nextSlot);

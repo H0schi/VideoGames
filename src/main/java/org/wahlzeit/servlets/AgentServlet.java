@@ -34,6 +34,10 @@ import java.util.logging.Logger;
  * A servlet class for asynchronous ("agent") tasks.
  */
 public class AgentServlet extends HttpServlet {
+	@interface DesignPattern {
+		String name = "Manager";
+		String[] participants = {"Client"};
+	}
 
 	private static Logger log = Logger.getLogger(AgentServlet.class.getName());
 

@@ -1,9 +1,9 @@
 /**
  * VideoGamesPhotoFactory
  * 
- * version 0.1
+ * version 0.2
  * 
- * date 31.10.2015
+ * date 01.12.2015
  * 
  * Copyright (c) by Thorsten Schwachhofer
  *
@@ -28,6 +28,9 @@ import java.util.logging.Logger;
 
 import org.wahlzeit.services.LogBuilder;
 
+import com.googlecode.objectify.annotation.Subclass;
+
+@Subclass
 public class VideoGamesPhotoFactory extends PhotoFactory {
 	
 	private static final Logger log = Logger.getLogger(VideoGamesPhotoFactory.class.getName());

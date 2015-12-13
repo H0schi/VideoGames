@@ -1,9 +1,9 @@
 /**
  * AbstractCoordinate
  * 
- * version 0.3
+ * version 0.4
  * 
- * date 24.11.2015
+ * date 09.12.2015
  * 
  * Thorsten Schwachhofer
  *
@@ -11,12 +11,17 @@
 
 package org.wahlzeit.model;
 
+import java.util.HashMap;
+
 /**
  * Abstract version of a Coordinate to hide implementation from the client. Standard representation of a Coordinate is a CartesianCoordinate
  */
 public abstract class AbstractCoordinate implements Coordinate {
 	
 	static final double EPSILON = 0.00001;
+	static final int MAX_SIZE = 1024;
+	
+	protected static HashMap<Integer, AbstractCoordinate> instances = new HashMap<>(MAX_SIZE);
 	
 	/**
 	 * @methodtype get
@@ -83,12 +88,38 @@ public abstract class AbstractCoordinate implements Coordinate {
 		if(this.getDistance(cd) <= EPSILON)
 			isEqual = true;	
 		
+		AbstractCoordinate absCd = (AbstractCoordinate) cd;
+		if((this.getX() - absCd.getX()) <= EPSILON
+				&&(this.getY() - absCd.getY()) <= EPSILON
+				&&(this.getZ() - absCd.getZ()) <= EPSILON)
+			isEqual = true;
+		
 		// Postconditions
 		assert isAbsCoordinateValid(cd);
 		assertClassInvariants();
 		
 		return isEqual;
 	}
+		
+	/**
+	 * @methodtype comparison
+	 */
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(this.getX());
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(this.getY());
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(this.getZ());
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+	
+	/**
+	 * 
+	 */
 	
 	/**
 	 * @methodtype query

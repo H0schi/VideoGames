@@ -1,9 +1,9 @@
 /**
  * CoordinateTest
  * 
- * version 0.4
+ * version 0.5
  * 
- * date 24.11.2015
+ * date 09.12.2015
  * 
  * Thorsten Schwachhofer
  * 
@@ -35,6 +35,17 @@ public class CoordinateTest {
 	
 	@Before
 	public void setUp() {
+		sCdDefault = SphericCoordinate.getInstance();
+		sCd1 = SphericCoordinate.getInstance(90.0, 90.0);
+		sCd2 = SphericCoordinate.getInstance(-50.0, 70.0);
+		sCd3 = SphericCoordinate.getInstance(90.0, 90.0);
+		
+		cCdDefault = CartesianCoordinate.getInstance();
+		cCd1 = CartesianCoordinate.getInstance(50.0, 50.0, 50.0);
+		cCd2 = CartesianCoordinate.getInstance(-500.0, 500.0, 750.0);
+		cCd3 = CartesianCoordinate.getInstance(50.0, 50.0, 50.0);
+
+		/*
 		sCdDefault = new SphericCoordinate();
 		sCd1 = new SphericCoordinate(90.0, 90.0);
 		sCd2 = new SphericCoordinate(-50.0, 70.0);
@@ -44,6 +55,7 @@ public class CoordinateTest {
 		cCd1 = new CartesianCoordinate(50.0, 50.0, 50.0);
 		cCd2 = new CartesianCoordinate(-500.0, 500.0, 750.0);
 		cCd3 = new CartesianCoordinate(50.0, 50.0, 50.0);
+		*/
 	}
 
 	@Test
@@ -62,11 +74,13 @@ public class CoordinateTest {
 	@Test
 	public void testConstructorWithIllegalArguments() {
 		try {
-			Coordinate wrong1 = new SphericCoordinate(1000, 0);
+			Coordinate wrong = SphericCoordinate.getInstance(1000, 0);
+			// Coordinate wrong1 = new SphericCoordinate(1000, 0);
 			fail("Should throw IllegalArgumentException because of latitude!");
 		} catch (IllegalArgumentException e) {}
 		try {
-			Coordinate wrong2 = new SphericCoordinate(0, 1000);
+			Coordinate wrong = SphericCoordinate.getInstance(0, 1000);
+			//Coordinate wrong2 = new SphericCoordinate(0, 1000);
 			fail("Should throw IllegalArgumentException because of longitude!");
 		} catch (IllegalArgumentException e) {}
 	}
@@ -124,23 +138,26 @@ public class CoordinateTest {
 		double res2 = cCd1.getDistance(cCd2);
 		assertEquals(997.49686, res2, epsilon);
 	}
-	
+/*	
 	@Test
 	public void testGetDistanceWithSameCoordinateAndConversionToCartesian() {
 		double x = sCd1.getX();
 		double y = sCd1.getY();
 		double z = sCd1.getZ();
-		CartesianCoordinate cd4 = new CartesianCoordinate(x, y, z);
+		//CartesianCoordinate cd4 = new CartesianCoordinate(x, y, z);
+		CartesianCoordinate cd4 = CartesianCoordinate.getInstance(x, y, z);
 		double res = sCd1.getDistance(cd4);
 		assertEquals(0.0, res, epsilon);
 	}
 	
+	*/
 	@Test
 	public void testGetDistanceWithConversionToCartesian() {
 		double x = sCd2.getX();
 		double y = sCd2.getY();
 		double z = sCd2.getZ();
-		CartesianCoordinate cd4 = new CartesianCoordinate(x, y, z);
+		//CartesianCoordinate cd4 = new CartesianCoordinate(x, y, z);
+		CartesianCoordinate cd4 = CartesianCoordinate.getInstance(x, y, z);
 		double res = sCd1.getDistance(cd4);
 		assertEquals(10738.98931, res, epsilon);
 	}
@@ -153,8 +170,10 @@ public class CoordinateTest {
 	
 	@Test
 	public void testWithDifferentCoordinates() {
-		SphericCoordinate coordinate1 = new SphericCoordinate(90, 90);
-		CartesianCoordinate coorindate2 = new CartesianCoordinate(50, 40, 100);
+		//SphericCoordinate coordinate1 = new SphericCoordinate(90, 90);
+		SphericCoordinate coordinate1 = SphericCoordinate.getInstance(90, 90);
+		//CartesianCoordinate coorindate2 = new CartesianCoordinate(50, 40, 100);
+		CartesianCoordinate coorindate2 = CartesianCoordinate.getInstance(50, 40, 100);
 		
 		assertEquals(coordinate1.getDistance(coorindate2), coorindate2.getDistance(coordinate1), epsilon);
 	}
@@ -162,14 +181,22 @@ public class CoordinateTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void sphericConstructorTest() {
 		@SuppressWarnings("unused")
-		SphericCoordinate coordinate = new SphericCoordinate(90, 90, Double.NaN);
+		//SphericCoordinate coordinate = new SphericCoordinate(90, 90, Double.NaN);
+		SphericCoordinate coordinate = SphericCoordinate.getInstance(90, 90, Double.NaN);
 	}
 	
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void cartesianConstructorTest() {
 		@SuppressWarnings("unused")
-		CartesianCoordinate coordinate2 = new CartesianCoordinate(Double.NaN, Double.NaN, Double.NaN);
+		//CartesianCoordinate coordinate2 = new CartesianCoordinate(Double.NaN, Double.NaN, Double.NaN);
+		CartesianCoordinate coordinate2 = CartesianCoordinate.getInstance(Double.NaN, Double.NaN, Double.NaN);
+	}
+	
+	@Test
+	public void hashCodeSameCoordinateTest() {
+		assertEquals(sCd1.hashCode(), sCd3.hashCode());
+		assertEquals(cCd1.hashCode(), cCd3.hashCode());
 	}
 	
 }

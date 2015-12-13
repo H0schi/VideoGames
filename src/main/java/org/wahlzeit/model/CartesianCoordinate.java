@@ -1,9 +1,9 @@
 /**
  * CartesianCoordinate
  * 
- * version 0.5
+ * version 0.6
  * 
- * date 24.11.2015
+ * date 09.12.2015
  * 
  * Thorsten Schwachhofer
  *
@@ -16,14 +16,39 @@ package org.wahlzeit.model;
  */
 public class CartesianCoordinate extends AbstractCoordinate {
 	
-	private double x;
-	private double y;
-	private double z;
+	private final double x;
+	private final double y;
+	private final double z;
+	
+	/**
+	 * @methodtype factory method
+	 */
+	public static CartesianCoordinate getInstance() {
+		return getInstance(0.f, 0.f, 0.f);
+	}
+	
+	/**
+	 * @methodtype factory method
+	 */
+	public static CartesianCoordinate getInstance(double x, double y, double z) {
+		CartesianCoordinate tmp = new CartesianCoordinate(x, y, z);
+		AbstractCoordinate res = instances.get(tmp.hashCode());
+		if(res == null || !res.equals(tmp) || !(res instanceof CartesianCoordinate)) {
+			synchronized(instances) {
+				if(res == null || !res.equals(tmp) || !(res instanceof CartesianCoordinate)){
+					instances.put(tmp.hashCode(), tmp);
+					res = tmp;
+				}
+			}
+		}
+		
+		return (CartesianCoordinate) res;
+	}
 	
 	/**
 	 * @methodtype constructor
 	 */
-	public CartesianCoordinate() {
+	private CartesianCoordinate() {
 		this(0.f, 0.f, 0.f);
 	}
 	
@@ -31,7 +56,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * @methodtype constructor
 	 * Precondition: parameters are valid double values
 	 */
-	public CartesianCoordinate(double x, double y, double z) {
+	private CartesianCoordinate(double x, double y, double z) {
 		// Precondition
 		if(!isValidDoubleValue(x) || !isValidDoubleValue(y) || !isValidDoubleValue(z))
 			throw new IllegalArgumentException("Error: Parameter is not a valid double value");
@@ -65,41 +90,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		return this.z;
 	}
 
-	/**
-	 * @methodtype comparison
-	 */
-	@Override
-	public boolean isEqual(Coordinate cd) {
-		// Preconditons: see superclass
-		
-		boolean isEqual = true;
-		if (!super.isEqual(cd))
-			isEqual = false;
-		if (!(cd instanceof CartesianCoordinate))
-			isEqual = false;
-		if (isEqual == false) {
-			// Postconditions
-			assert isAbsCoordinateValid(cd);
-			assertClassInvariants();
-			
-			return isEqual;
-		}
-			
-		CartesianCoordinate other = (CartesianCoordinate) cd;
-		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
-			isEqual = false;
-		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
-			isEqual = false;
-		if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z))
-			isEqual = false;
-		
-		// Postconditions
-		assert isAbsCoordinateValid(cd);
-		assertClassInvariants();
-		
-		return isEqual;
-	}
-	
 	/**
 	 * @methodtype assertion
 	 */

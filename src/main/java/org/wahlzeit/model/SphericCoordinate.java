@@ -1,9 +1,9 @@
 /**
  * SphericCoordinate
  * 
- * version 0.5
+ * version 0.6
  * 
- * date 24.11.2015
+ * date 09.12.2015
  * 
  * Thorsten Schwachhofer
  * 
@@ -16,21 +16,54 @@ package org.wahlzeit.model;
  */
 public class SphericCoordinate extends AbstractCoordinate {
 
-	private double latitude;
-	private double longitude;
-	private double radius;
+	private final double latitude;
+	private final double longitude;
+	private final double radius;
 	
+	/**
+	 * @methodtype factory method
+	 */
+	public static SphericCoordinate getInstance() {
+		return getInstance(0.f, 0.f, 6371.f);
+	}
+	
+	/**
+	 * @methodtype factory method
+	 */
+	public static SphericCoordinate getInstance(double latitude, double longitude) {
+		return getInstance(latitude, longitude, 6371.f);
+	}
+	
+	/**
+	 * @methodtype factory method
+	 * Precondition: latitude, longitude and radius are valid doubles and valid spheric values -> see constructor
+	 */
+	public static SphericCoordinate getInstance(double latitude, double longitude, double radius) {
+		SphericCoordinate tmp = new SphericCoordinate(latitude, longitude, radius);
+		AbstractCoordinate res = instances.get(tmp.hashCode());
+		if(res == null || !res.equals(tmp) || !(res instanceof SphericCoordinate)) {
+			synchronized(instances) {
+				if(res == null || !res.equals(tmp) || !(res instanceof SphericCoordinate)) {
+					instances.put(tmp.hashCode(), tmp);
+					res = tmp;
+				}
+			}
+		}
+		
+		return (SphericCoordinate) res;
+	}
+
 	/**
 	 * @methodtype constructor
 	 */
-	public SphericCoordinate() {
+	private SphericCoordinate() {
 		this(0.f, 0.f, 6371.f);
 	}
 	
 	/**
 	 * @methodtype constructor
 	 */
-	public SphericCoordinate(double latitude, double longitude) {
+	private SphericCoordinate(double latitude, double longitude) {
 		this(latitude, longitude, 6371.f);
 	}
 	
@@ -39,7 +72,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * Precondition: parameters are valid double values, latitude, longitude and radius are valid, radius > 0
 	 * Postcondition: assertClassInvariants
 	 */
-	public SphericCoordinate(double latitude, double longitude, double radius) {
+	private SphericCoordinate(double latitude, double longitude, double radius) {
 		// Preconditions
 		if(!isValidDoubleValue(latitude) || !isValidDoubleValue(longitude) || !isValidDoubleValue(radius))
 			throw new IllegalArgumentException("Error: Parameter is not a valid double value");
@@ -128,41 +161,6 @@ public class SphericCoordinate extends AbstractCoordinate {
 		assertClassInvariants();
 		
 		return result;
-	}
-
-	/**
-	 * @methodtype comparison
-	 */
-	@Override
-	public boolean isEqual(Coordinate cd) {
-		// Preconditons: see superclass
-		
-		boolean isEqual = true;
-		if(!super.isEqual(cd))
-			isEqual = false;
-		if(!(cd instanceof SphericCoordinate))
-			isEqual = false;
-		if(isEqual == false) {
-			// Postconditions
-			assert isAbsCoordinateValid(cd);
-			assertClassInvariants();
-			
-			return isEqual;
-		}
-		
-		SphericCoordinate other = (SphericCoordinate) cd;
-		if(Double.doubleToLongBits(latitude) != Double.doubleToLongBits(other.latitude))
-			isEqual = false;
-		if(Double.doubleToLongBits(longitude) != Double.doubleToLongBits(other.longitude))
-			isEqual = false;
-		if(Double.doubleToLongBits(radius) != Double.doubleToLongBits(other.radius))
-			isEqual = false;
-		
-		// Postconditions
-		assert isAbsCoordinateValid(cd);
-		assertClassInvariants();
-		
-		return isEqual;
 	}
 
 	/**

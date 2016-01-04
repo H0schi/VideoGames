@@ -12,6 +12,8 @@ import org.wahlzeit.model.Photo;
 import org.wahlzeit.model.PhotoCase;
 import org.wahlzeit.model.Tag;
 import org.wahlzeit.model.User;
+import org.wahlzeit.model.VideoGame;
+import org.wahlzeit.model.VideoGameType;
 import org.wahlzeit.model.VideoGamesPhoto;
 import org.wahlzeit.model.persistence.DatastoreAdapter.ImageWrapper;
 

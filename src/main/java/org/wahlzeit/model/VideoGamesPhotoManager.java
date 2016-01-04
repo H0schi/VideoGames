@@ -24,29 +24,12 @@
 
 package org.wahlzeit.model;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
 public class VideoGamesPhotoManager extends PhotoManager {
 	
 	protected static final VideoGamesPhotoManager instance = new VideoGamesPhotoManager();
 	
-//	public void savePhoto(VideoGamesPhoto photo) {
-//		updateObject(photo); //No need to overload this, as every instanceof VideoGamesPhoto is also a instanceof Photo
-//	}
-	
-	/**
-	 * @methodtype command
-	 */
-	public Set<VideoGamesPhoto> findPhotosByGenre(GameGenre genre) {
-		Set<VideoGamesPhoto> result = new HashSet<VideoGamesPhoto>();
-		readObjects(result, VideoGamesPhoto.class, VideoGamesPhoto.GENRE, genre);
-
-		for (Iterator<VideoGamesPhoto> i = result.iterator(); i.hasNext(); ) {
-			doAddPhoto(i.next());
-		}
-
-		return result;
+	public void savePhoto(VideoGamesPhoto photo) {
+		updateObject(photo); //No need to overload this, as every instanceof VideoGamesPhoto is also a instanceof Photo
 	}
+	
 }

@@ -24,6 +24,8 @@
 
 package org.wahlzeit.model;
 
+import com.google.appengine.api.images.Image;
+
 public class VideoGamesPhotoManager extends PhotoManager {
 	
 	protected static final VideoGamesPhotoManager instance = new VideoGamesPhotoManager();
@@ -31,5 +33,16 @@ public class VideoGamesPhotoManager extends PhotoManager {
 	public void savePhoto(VideoGamesPhoto photo) {
 		updateObject(photo); //No need to overload this, as every instanceof VideoGamesPhoto is also a instanceof Photo
 	}
+	
+	/**
+	 * create
+	 */
+	public VideoGamesPhoto createPhoto(String filename, Image uploadedImage) throws Exception {
+		PhotoId id = PhotoId.getNextId();
+		VideoGamesPhoto result = (VideoGamesPhoto) PhotoUtil.createPhoto(filename, id, uploadedImage);
+		addPhoto(result);
+		return result;
+	}
+
 	
 }
